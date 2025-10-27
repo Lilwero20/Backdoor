@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Backdoor Executor</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="header">
+    <a href="#home" class="logo">Backdoor</a>
+    <nav class="navbar" role="navigation" aria-label="Main">
+      <a href="#home" class="active">Home</a>
+      <a href="#about">About</a>
+      <a href="#discord">Discord</a>
+      <a href="#download">Download</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="home">
+      <div class="home-content reveal">
+        <h1>Backdoor Executor</h1>
+        <p class="tagline">The Best Executor For Roblox Exploiting</p>
+        <img class="hero-image reveal" src="assets/your-image.png" alt="Backdoor visual">
+      </div>
+    </section>
+
+    <section id="about" class="about">
+      <div class="about-content reveal">
+        <h2 class="about-title">About</h2>
+        <p class="about-lead">Herramienta ligera, potente y optimizada para ejecutar scripts con rapidez y estabilidad.</p>
+
+        <div class="cards">
+          <article class="card reveal">
+            <div class="card-inner">
+              <h3 class="card-title">El mejor executor de Roblox</h3>
+              <div class="card-stat">90 UNC</div>
+              <p class="card-desc">Rendimiento sobresaliente y compatibilidad con la mayoría de scripts populares.</p>
+            </div>
+          </article>
+
+          <article class="card reveal">
+            <div class="card-inner">
+              <h3 class="card-title">Estabilidad</h3>
+              <div class="card-stat">90 sUNC</div>
+              <p class="card-desc">Conexiones y ejecución estables para sesiones largas sin crasheos.</p>
+            </div>
+          </article>
+
+          <article class="card reveal">
+            <div class="card-inner">
+              <h3 class="card-title">Características</h3>
+              <div class="card-stat">AutoInject · Scripts · GUI</div>
+              <p class="card-desc">Funciones avanzadas listas para personalizar y extender según tus necesidades.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="discord" class="about">
+      <div class="about-content reveal">
+        <h2 class="about-title">Únete a Nosotros</h2>
+        <p class="about-lead">Únete a nuestro Discord con una comunidad activa, soporte, anuncios y guías para sacarle el máximo provecho a Backdoor.</p>
+
+        <div class="discord-grid">
+          <div class="discord-card reveal">
+            <div class="discord-inner">
+              <h3 class="discord-title">Comunidad Activa</h3>
+              <p class="discord-desc">Habla con otros usuarios, comparte scripts y resuelve dudas en tiempo real.</p>
+            </div>
+          </div>
+
+          <div class="discord-card reveal">
+            <div class="discord-inner">
+              <h3 class="discord-title">Soporte</h3>
+              <p class="discord-desc">Canal de soporte para problemas técnicos y guías paso a paso.</p>
+            </div>
+          </div>
+
+          <div class="discord-card reveal">
+            <div class="discord-inner">
+              <h3 class="discord-title">Anuncios</h3>
+              <p class="discord-desc">Recibe noticias, actualizaciones y lanzamientos antes que nadie.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="center-row">
+          <a class="primary-btn reveal" href="#" role="button" aria-label="Unete a nuestro Discord">Unete a Nuestro Discord</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="download" class="about">
+      <div class="about-content reveal">
+        <h2 class="about-title">Descarga Backdoor Executor</h2>
+        <p class="about-lead">Elige el acortador que más te guste. Selecciona uno de los botones para usar ese acortador.</p>
+
+        <div class="cards download-cards">
+          <article class="card reveal">
+            <div class="card-inner download-inner">
+              <img class="card-image" src="assets/lootlabs.png" alt="Acortador 1">
+              <h3 class="card-title">Loot Labs</h3>
+              <ul class="benefits">
+                <li>Descargas rápidas</li>
+                <li>Interfaz sencilla</li>
+                <li>Sin registro obligatorio</li>
+              </ul>
+              <div class="card-actions">
+                <a class="use-btn" href="#" role="button">Usar Loot Labs</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="card reveal">
+            <div class="card-inner download-inner">
+              <img class="card-image" src="assets/linkvertise.png" alt="Acortador 2">
+              <h3 class="card-title">Linkvertise</h3>
+              <ul class="benefits">
+                <li>Mayor compatibilidad</li>
+                <li>Estadísticas de clics</li>
+                <li>Protección básica</li>
+              </ul>
+              <div class="card-actions">
+                <a class="use-btn" href="#" role="button">Usar Linkvertise</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="card reveal">
+            <div class="card-inner download-inner">
+              <img class="card-image" src="assets/workinks.png" alt="Acortador 3">
+              <h3 class="card-title">Work Ink</h3>
+              <ul class="benefits">
+                <li>Interfaz moderna</li>
+                <li>Soporte para móviles</li>
+                <li>Protección por contraseña</li>
+              </ul>
+              <div class="card-actions">
+                <a class="use-btn" href="#" role="button">Usar Work Ink</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (function(){
+      const header = document.querySelector('.header');
+      if (!header) return;
+
+      const navLinks = Array.from(document.querySelectorAll('.navbar a'));
+      const sections = Array.from(document.querySelectorAll('main > section'));
+      const revealElements = Array.from(document.querySelectorAll('.reveal'));
+
+      navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const targetId = link.getAttribute('href').replace('#','');
+          const target = document.getElementById(targetId);
+          if (!target) return;
+          const offset = header.offsetHeight + 14;
+          const top = target.getBoundingClientRect().top + window.scrollY - offset;
+          window.scrollTo({ top, behavior: 'smooth' });
+        });
+      });
+
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+
+      revealElements.forEach((el, i) => {
+        el.style.setProperty('--delay', `${i * 80}ms`);
+        revealObserver.observe(el);
+      });
+
+      const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === `#${id}`));
+          }
+        });
+      }, { root: null, rootMargin: '-40% 0% -40% 0%', threshold: 0 });
+
+      sections.forEach(s => sectionObserver.observe(s));
+
+      const onScrollHeader = () => header.classList.toggle('scrolled', window.scrollY > 50);
+      window.addEventListener('scroll', onScrollHeader, { passive: true });
+      onScrollHeader();
+    })();
+  </script>
+</body>
+</html>

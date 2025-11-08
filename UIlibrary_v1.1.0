@@ -635,10 +635,3 @@ closeMenu.MouseButton1Click:Connect(function()
         Shadow.Visible = false
     end)
 end)
-
--- expose globals for convenience
-createTab = public.createTab
-createToggle = public.createToggle
-createButton = public.createButton
-createNotify = public.createNotify
-useNotify = public.useNotify

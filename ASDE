@@ -2415,18 +2415,6 @@ public.createTab("Main")
 
 public.createToggle("Air Walk", function(state) visibleButton("Air Walk", state) end) -- falls back to current/Main
 public.createToggle("Falling Fly", function(state) visibleButton("Falling Fly", state) end)
-public.createToggle("Desync", function(state) visibleButton("Desync", state) end)
-public.createToggle("Fly Grapple", function(state) visibleButton("Fly Grapple", state) end)
-public.createToggle("ESP Players", "ESP", function(state) toggleEspPlayers(state) end)
-public.createToggle("ESP Brainrots", "ESP", function(state) toggleBrainrot(state) end)
-public.createToggle("ESP Timers", "ESP", function(state)  espBasesToggle(state) end)
-public.createToggle("Control Players", "GUIs", function(state)  ToggleControl(state) end)
-public.createToggle("Auto Laser Cape", "GUIs", function(state)  toggleLaserGui(state) end)
-
-public.createTab("Main")
-
-public.createToggle("Air Walk", function(state) visibleButton("Air Walk", state) end) -- falls back to current/Main
-public.createToggle("Falling Fly", function(state) visibleButton("Falling Fly", state) end)
 public.createToggle("Fly Quantum", function(state) visibleButton("Fly Quantum", state) end)
 public.createToggle("Fly Grapple", function(state) visibleButton("Fly Grapple", state) end)
 public.createToggle("ESP Players", "ESP", function(state) toggleEspPlayers(state) end)

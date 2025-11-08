@@ -2382,7 +2382,7 @@ createButton("Falling Fly", function(state)
 end, UDim2.new(0.8277, 0, 0.3408, 0))
 
 createButton("Desync", function(state)
-	if desync then
+	if enableMobileDesync then
 		enableMobileDesync()
 	end
 end, UDim2.new(0.7075, 0, 0.2365, 0))

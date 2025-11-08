@@ -1260,13 +1260,13 @@ local function enableMobileDesync()
             task.wait(0.5)
         end
 
-        if setfflag then setfflag("WorldStepMax", "-9999999999") end
+        if setfflag then setfflag("WorldStepMax", "-1") end
         task.wait(0.2)
         useItemRemote:FireServer()
         task.wait(1)
         teleportRemote:FireServer()
         task.wait(2)
-        if setfflag then setfflag("WorldStepMax", "-1") end
+        if setfflag then setfflag("WorldStepMax", "-9999999999") end
         print("✅ Mobile Desync activado!")
         return true
     end)
@@ -1284,24 +1284,8 @@ local function disableMobileDesync()
     end)
 end
 
-
-extraButton.MouseButton1Click:Connect(function()
-    desyncActive = not desyncActive
-    if desyncActive then
-        local success = enableMobileDesync()
-        if success then
-        else
-            desyncActive=false
-        end
-    else
-        disableMobileDesync()
-    end
-end)
-
-
 LocalPlayer.CharacterAdded:Connect(function()
     desyncActive=false
-    extraButton.BackgroundColor3 = Color3.fromRGB(25, 35, 50)
 end)
 
 -- ===== Toggle ESP Players =====
@@ -2416,7 +2400,7 @@ public.createTab("Main")
 public.createToggle("Air Walk", function(state) visibleButton("Air Walk", state) end) -- falls back to current/Main
 public.createToggle("Falling Fly", function(state) visibleButton("Falling Fly", state) end)
 public.createToggle("Fly Quantum", function(state) visibleButton("Fly Quantum", state) end)
-public.createToggle("Fly Grapple", function(state) visibleButton("Fly Grapple", state) end)
+public.createToggle("Desync Cloner", function(state) visibleButton("Desync", state) end)
 public.createToggle("ESP Players", "ESP", function(state) toggleEspPlayers(state) end)
 public.createToggle("ESP Brainrots", "ESP", function(state) toggleBrainrot(state) end)
 public.createToggle("ESP Timers", "ESP", function(state)  espBasesToggle(state) end)

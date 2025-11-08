@@ -1260,13 +1260,13 @@ local function enableMobileDesync()
             task.wait(0.5)
         end
 
-        if setfflag then setfflag("WorldStepMax", "-9999999999") end
+        if setfflag then setfflag("WorldStepMax", "-1") end
         task.wait(0.2)
         useItemRemote:FireServer()
         task.wait(1)
         teleportRemote:FireServer()
         task.wait(2)
-        if setfflag then setfflag("WorldStepMax", "-1") end
+        if setfflag then setfflag("WorldStepMax", "-9999999999") end
         print("✅ Mobile Desync activado!")
         return true
     end)
@@ -2382,7 +2382,7 @@ createButton("Falling Fly", function(state)
 end, UDim2.new(0.8277, 0, 0.3408, 0))
 
 createButton("Desync", function(state)
-	if desync then
+	if enableMobileDesync then
 		enableMobileDesync()
 	end
 end, UDim2.new(0.7075, 0, 0.2365, 0))

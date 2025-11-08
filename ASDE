@@ -1222,100 +1222,87 @@ end
 -- ===== Desync =====
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-
 local LocalPlayer = Players.LocalPlayer
-local TOOL_NAME = "Quantum Cloner"
+local desyncActive = false
 
--- Busca RemoteEvent RE/UseItem (intenta en Packages/Net y búsqueda global)
-local function getUseItemRemote()
-    local ok, result = pcall(function()
-        local pk = ReplicatedStorage:FindFirstChild("Packages")
-        if pk then
-            local net = pk:FindFirstChild("Net")
-            if net then
-                return net:FindFirstChild("RE/UseItem")
+
+local function enableMobileDesync()
+    local success, error = pcall(function()
+        local backpack = LocalPlayer:WaitForChild("Backpack")
+        local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+        local humanoid = character:WaitForChild("Humanoid")
+        
+        local packages = ReplicatedStorage:WaitForChild("Packages", 5)
+        if not packages then warn("❌ ERROR WITH FFLAGS") return false end
+        
+        local netFolder = packages:WaitForChild("Net", 5)
+        if not netFolder then warn("❌ FOLDER NO ENCONTRADO") return false end
+        
+        local useItemRemote = netFolder:WaitForChild("RE/UseItem", 5)
+        local teleportRemote = netFolder:WaitForChild("RE/QuantumCloner/OnTeleport", 5)
+        if not useItemRemote or not teleportRemote then warn("❌ REMOTES NO ENCONTRADO") return false end
+
+        
+        local toolNames = {"Quantum Cloner", "Brainrot", "brainrot"}
+        local tool
+        for _, toolName in ipairs(toolNames) do
+            tool = backpack:FindFirstChild(toolName) or character:FindFirstChild(toolName)
+            if tool then break end
+        end
+        if not tool then
+            for _, item in ipairs(backpack:GetChildren()) do
+                if item:IsA("Tool") then tool=item break end
             end
         end
-    end)
-    if ok and result and result:IsA("RemoteEvent") then return result end
 
-    local found = ReplicatedStorage:FindFirstChild("RE/UseItem", true)
-    if found and found:IsA("RemoteEvent") then return found end
-    return nil
-end
-
-local USE_ITEM_REMOTE = getUseItemRemote()
-
--- intenta equipar la herramienta (mueve de Backpack a Character o usa Humanoid:EquipTool)
-local function tryEquipTool(tool)
-    if not tool then return false end
-    local char = LocalPlayer.Character
-    if not char then
-        -- intentar esperar un poco a que exista el personaje
-        char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
-    end
-    local humanoid = char and char:FindFirstChildWhichIsA("Humanoid")
-    -- si está en Backpack, muévelo a Character para equiparlo
-    if tool.Parent == LocalPlayer.Backpack and humanoid then
-        local success, err = pcall(function()
+        if tool and tool.Parent==backpack then
             humanoid:EquipTool(tool)
-        end)
-        if success then return true end
-    end
-    -- si ya está en Character, consideramos equipado
-    if tool.Parent == char then
+            task.wait(0.5)
+        end
+
+        if setfflag then setfflag("WorldStepMax", "-9999999999") end
+        task.wait(0.2)
+        useItemRemote:FireServer()
+        task.wait(1)
+        teleportRemote:FireServer()
+        task.wait(2)
+        if setfflag then setfflag("WorldStepMax", "-1") end
+        print("✅ Mobile Desync activado!")
         return true
-    end
-    -- fallback: intentar parentear directamente (puede funcionar en algunos juegos)
-    local ok, err = pcall(function()
-        tool.Parent = char
     end)
-    return ok
-end
-
--- función pública para activar la "desync" (no es toggle; ejecutar desde un botón)
-local function desync()
-    -- ejecutar setfflag si existe
-    if typeof(setfflag) == "function" or type(setfflag) == "function" then
-        pcall(function() setfflag("WorldStepMax", "-1") end)
-    end
-
-    -- equipar herramienta y usar remote
-    -- buscar la herramienta en Character o Backpack
-    local tool = nil
-    if LocalPlayer.Character then
-        tool = LocalPlayer.Character:FindFirstChild(TOOL_NAME)
-    end
-    if not tool and LocalPlayer:FindFirstChild("Backpack") then
-        tool = LocalPlayer.Backpack:FindFirstChild(TOOL_NAME)
-    end
-
-    if not tool then
-        warn("[desync] no se encontró la herramienta '" .. TOOL_NAME .. "' en Character ni Backpack.")
+    if not success then
+        warn("❌ Error al activar desync: " .. tostring(error))
         return false
     end
+    return success
+end
 
-    local equipped = tryEquipTool(tool)
-    if not equipped then
-        warn("[desync] fallo al equipar '" .. TOOL_NAME .. "'.")
-        -- igual intentamos enviar el remote si existe y la herramienta está referenciada
-    end
+local function disableMobileDesync()
+    pcall(function()
+        if setfflag then setfflag("WorldStepMax", "-1") end
+        print("❌ Mobile Desync desactivado!")
+    end)
+end
 
-    -- usar RemoteEvent si está disponible
-    if USE_ITEM_REMOTE and USE_ITEM_REMOTE:IsA("RemoteEvent") then
-        pcall(function()
-            -- varios juegos esperan el objeto herramienta como argumento; usamos lo que tengamos
-            USE_ITEM_REMOTE:FireServer(tool)
-        end)
-        return true
+
+extraButton.MouseButton1Click:Connect(function()
+    desyncActive = not desyncActive
+    if desyncActive then
+        local success = enableMobileDesync()
+        if success then
+        else
+            desyncActive=false
+        end
     else
-        warn("[desync] RE/UseItem no encontrado.")
-        return false
+        disableMobileDesync()
     end
-end
+end)
 
--- Exponer la función globalmente por conveniencia (opcional)
-_G.desync = desync
+
+LocalPlayer.CharacterAdded:Connect(function()
+    desyncActive=false
+    extraButton.BackgroundColor3 = Color3.fromRGB(25, 35, 50)
+end)
 
 -- ===== Toggle ESP Players =====
 -- ESP mejorado: persiste al morir del local player, toggle reversible y actualizado en tiempo real.
@@ -2412,7 +2399,7 @@ end, UDim2.new(0.8277, 0, 0.3408, 0))
 
 createButton("Desync", function(state)
 	if desync then
-		desync()
+		enableMobileDesync()
 	end
 end, UDim2.new(0.7075, 0, 0.2365, 0))
 

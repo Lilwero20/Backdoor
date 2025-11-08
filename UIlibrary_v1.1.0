@@ -1222,103 +1222,71 @@ end
 -- ===== Desync =====
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-
 local LocalPlayer = Players.LocalPlayer
-local TOOL_NAME = "Quantum Cloner"
+local desyncActive = false
 
--- Busca RemoteEvent RE/UseItem
-local function getUseItemRemote()
-    local ok, result = pcall(function()
-        local pk = ReplicatedStorage:FindFirstChild("Packages")
-        if pk then
-            local net = pk:FindFirstChild("Net")
-            if net then
-                return net:FindFirstChild("RE/UseItem")
+
+local function enableMobileDesync()
+    local success, error = pcall(function()
+        local backpack = LocalPlayer:WaitForChild("Backpack")
+        local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+        local humanoid = character:WaitForChild("Humanoid")
+        
+        local packages = ReplicatedStorage:WaitForChild("Packages", 5)
+        if not packages then warn("❌ ERROR WITH FFLAGS") return false end
+        
+        local netFolder = packages:WaitForChild("Net", 5)
+        if not netFolder then warn("❌ FOLDER NO ENCONTRADO") return false end
+        
+        local useItemRemote = netFolder:WaitForChild("RE/UseItem", 5)
+        local teleportRemote = netFolder:WaitForChild("RE/QuantumCloner/OnTeleport", 5)
+        if not useItemRemote or not teleportRemote then warn("❌ REMOTES NO ENCONTRADO") return false end
+
+        
+        local toolNames = {"Quantum Cloner", "Brainrot", "brainrot"}
+        local tool
+        for _, toolName in ipairs(toolNames) do
+            tool = backpack:FindFirstChild(toolName) or character:FindFirstChild(toolName)
+            if tool then break end
+        end
+        if not tool then
+            for _, item in ipairs(backpack:GetChildren()) do
+                if item:IsA("Tool") then tool=item break end
             end
         end
-    end)
-    if ok and result and result:IsA("RemoteEvent") then return result end
 
-    local found = ReplicatedStorage:FindFirstChild("RE/UseItem", true)
-    if found and found:IsA("RemoteEvent") then return found end
-    return nil
-end
-
-local USE_ITEM_REMOTE = getUseItemRemote()
-
--- Segundo remote: QuantumCloner/OnTeleport
-local TELEPORT_REMOTE = ReplicatedStorage:FindFirstChild("Packages")
-    and ReplicatedStorage.Packages:FindFirstChild("Net")
-    and ReplicatedStorage.Packages.Net:FindFirstChild("RE/QuantumCloner/OnTeleport")
-
--- Función auxiliar para equipar la herramienta
-local function tryEquipTool(tool)
-    if not tool then return false end
-    local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
-    local humanoid = char and char:FindFirstChildWhichIsA("Humanoid")
-
-    if tool.Parent == LocalPlayer.Backpack and humanoid then
-        local success = pcall(function()
+        if tool and tool.Parent==backpack then
             humanoid:EquipTool(tool)
-        end)
-        if success then return true end
-    end
+            task.wait(0.5)
+        end
 
-    if tool.Parent == char then return true end
-
-    local ok = pcall(function()
-        tool.Parent = char
+        if setfflag then setfflag("WorldStepMax", "-9999999999") end
+        task.wait(0.2)
+        useItemRemote:FireServer()
+        task.wait(1)
+        teleportRemote:FireServer()
+        task.wait(2)
+        if setfflag then setfflag("WorldStepMax", "-1") end
+        print("✅ Mobile Desync activado!")
+        return true
     end)
-    return ok
-end
-
--- Función pública (llamar desde un botón)
-local function desync()
-    -- Buscar herramienta Quantum Cloner
-    local tool = nil
-    if LocalPlayer.Character then
-        tool = LocalPlayer.Character:FindFirstChild(TOOL_NAME)
-    end
-    if not tool and LocalPlayer:FindFirstChild("Backpack") then
-        tool = LocalPlayer.Backpack:FindFirstChild(TOOL_NAME)
-    end
-
-    if not tool then
-        warn("[desync] No se encontró la herramienta '" .. TOOL_NAME .. "'.")
+    if not success then
+        warn("❌ Error al activar desync: " .. tostring(error))
         return false
     end
-
-    tryEquipTool(tool)
-
-    -- Primer Remote: RE/UseItem
-    if USE_ITEM_REMOTE and USE_ITEM_REMOTE:IsA("RemoteEvent") then
-        pcall(function()
-            USE_ITEM_REMOTE:FireServer(tool)
-        end)
-    else
-        warn("[desync] RE/UseItem no encontrado.")
-    end
-
-    -- Segundo Remote: RE/QuantumCloner/OnTeleport
-    if TELEPORT_REMOTE and TELEPORT_REMOTE:IsA("RemoteEvent") then
-        local args = {}
-        pcall(function()
-            TELEPORT_REMOTE:FireServer(unpack(args))
-        end)
-    else
-        warn("[desync] RE/QuantumCloner/OnTeleport no encontrado.")
-    end
-
-    -- Ejecutar setfflag al final
-    if typeof(setfflag) == "function" or type(setfflag) == "function" then
-        pcall(function() setfflag("WorldStepMax", "-1") end)
-    end
-
-    return true
+    return success
 end
 
--- Exponer globalmente (opcional)
-_G.desync = desync
+local function disableMobileDesync()
+    pcall(function()
+        if setfflag then setfflag("WorldStepMax", "-1") end
+        print("❌ Mobile Desync desactivado!")
+    end)
+end
+
+LocalPlayer.CharacterAdded:Connect(function()
+    desyncActive=false
+end)
 
 -- ===== Toggle ESP Players =====
 -- ESP mejorado: persiste al morir del local player, toggle reversible y actualizado en tiempo real.
@@ -2415,7 +2383,7 @@ end, UDim2.new(0.8277, 0, 0.3408, 0))
 
 createButton("Desync", function(state)
 	if desync then
-		desync()
+		enableMobileDesync()
 	end
 end, UDim2.new(0.7075, 0, 0.2365, 0))
 
@@ -2431,20 +2399,8 @@ public.createTab("Main")
 
 public.createToggle("Air Walk", function(state) visibleButton("Air Walk", state) end) -- falls back to current/Main
 public.createToggle("Falling Fly", function(state) visibleButton("Falling Fly", state) end)
-public.createToggle("Desync", function(state) visibleButton("Desync", state) end)
-public.createToggle("Fly Grapple", function(state) visibleButton("Fly Grapple", state) end)
-public.createToggle("ESP Players", "ESP", function(state) toggleEspPlayers(state) end)
-public.createToggle("ESP Brainrots", "ESP", function(state) toggleBrainrot(state) end)
-public.createToggle("ESP Timers", "ESP", function(state)  espBasesToggle(state) end)
-public.createToggle("Control Players", "GUIs", function(state)  ToggleControl(state) end)
-public.createToggle("Auto Laser Cape", "GUIs", function(state)  toggleLaserGui(state) end)
-
-public.createTab("Main")
-
-public.createToggle("Air Walk", function(state) visibleButton("Air Walk", state) end) -- falls back to current/Main
-public.createToggle("Falling Fly", function(state) visibleButton("Falling Fly", state) end)
 public.createToggle("Fly Quantum", function(state) visibleButton("Fly Quantum", state) end)
-public.createToggle("Fly Grapple", function(state) visibleButton("Fly Grapple", state) end)
+public.createToggle("Desync Cloner", function(state) visibleButton("Desync", state) end)
 public.createToggle("ESP Players", "ESP", function(state) toggleEspPlayers(state) end)
 public.createToggle("ESP Brainrots", "ESP", function(state) toggleBrainrot(state) end)
 public.createToggle("ESP Timers", "ESP", function(state)  espBasesToggle(state) end)

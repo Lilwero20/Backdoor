@@ -1,0 +1,7 @@
+local StarterGui = game:GetService("StarterGui")
+
+StarterGui:SetCore("SendNotification", {
+    Title = "Pandora",
+    Text = "Pandora Is Attached and Ready For Use.",
+    Duration = 5
+})

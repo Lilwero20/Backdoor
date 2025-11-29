@@ -1,8 +1,8 @@
 {
   "latest": "1.4.0",
   "url": "https://lilwero20.github.io/Backdoor/",
-  "notes": "Correcciones de seguridad y mejoras de rendimiento. Añadida función X.",
-  "releaseDate": "2025-11-20",
+  "notes": "Correcciones de seguridad y mejoras de rendimiento. Añadida función de Actualizaciones.",
+  "releaseDate": "2025-11-29",
   "mandatory": false,
   "minSupported": "1.0.0"
 }

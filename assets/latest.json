@@ -1,8 +1,8 @@
 {
-  "latest": "1.4.10",
+  "latest": "1.4.20",
   "url": "https://lilwero20.github.io/Backdoor/",
-  "notes": "Correcciones de errores. ScriptHub Agregado y Arreglado.",
-  "releaseDate": "2025-11-29",
+  "notes": "Correcciones de errores. Todas Las Configuraciones Del Apartado De Configuraciones Sirven Correctamente.",
+  "releaseDate": "2025-11-30",
   "mandatory": false,
   "minSupported": "1.0.0"
 }

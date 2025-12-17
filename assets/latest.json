@@ -1,7 +1,7 @@
 {
-  "latest": "1.4.20",
+  "latest": "1.4.30",
   "url": "https://lilwero20.github.io/Backdoor/",
-  "notes": "Correcciones de errores. Todas Las Configuraciones Del Apartado De Configuraciones Sirven Correctamente.",
+  "notes": "Correcciones de errores. Error Al Inyectar Solucionado.",
   "releaseDate": "2025-11-30",
   "mandatory": false,
   "minSupported": "1.0.0"

@@ -1,8 +1,8 @@
 {
-  "latest": "1.0.0",
+  "latest": "1.0.1",
   "url": "https://lilwero20.github.io/Backdoor/",
-  "notes": "Correcciones de errores. Key System Agregado, UNC aumentado a 96 de UNC",
-  "releaseDate": "2026-3-15",
+  "notes": "Executor Reworked",
+  "releaseDate": "2026-3-24",
   "mandatory": false,
   "minSupported": "1.0.0"
 }

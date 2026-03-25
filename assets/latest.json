@@ -3,6 +3,6 @@
   "url": "https://lilwero20.github.io/Backdoor/",
   "notes": "Executor Reworked",
   "releaseDate": "2026-3-24",
-  "mandatory": false,
+  "mandatory": true,
   "minSupported": "1.0.0"
 }

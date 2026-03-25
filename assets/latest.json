@@ -1,7 +1,7 @@
 {
-  "latest": "1.0.2",
+  "latest": "1.0.3",
   "url": "https://lilwero20.github.io/Backdoor/",
-  "notes": "Executor Reworked",
+  "notes": "Executor Reworked, Notification System Updated, Updates Checker Improved.",
   "releaseDate": "2026-3-24",
   "mandatory": true,
   "minSupported": "1.0.0"

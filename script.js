@@ -19,7 +19,7 @@ document.querySelectorAll('.faq-question').forEach(question => {
 // Carga de imágenes en la galería
 const galleryImages = [
     'assets/ui_preview.png',
-    'assets/Logo_full.png', 
+    'assets/screenshot1.png', 
     'assets/screenshot2.png'
 ];
 

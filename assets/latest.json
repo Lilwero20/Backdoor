@@ -1,8 +1,14 @@
 {
-  "latest": "1.0.3",
-  "url": "https://lilwero20.github.io/Backdoor/",
-  "notes": "Executor Reworked, Notification System Updated, Updates Checker Improved.",
-  "releaseDate": "2026-3-24",
+  "latest": "1.0.4",
+  "url": "https://lilwero20.github.io/Viper/",
+  "notes": "Executor: Reworked for better performance.
+
+Notification System: Updated and refined.
+
+Update Checker: Improved reliability.
+
+Viper Executor: Officially released.",
+  "releaseDate": "2026-03-25",
   "mandatory": true,
   "minSupported": "1.0.0"
 }

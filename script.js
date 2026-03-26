@@ -18,10 +18,24 @@ window.addEventListener('scroll', () => {
     }
 });
 
+// --- LÓGICA FAQ (Acordeón) ---
+document.querySelectorAll('.faq-question').forEach(question => {
+    question.addEventListener('click', () => {
+        const item = question.parentElement;
+        
+        // Cerrar otros si quieres que solo haya uno abierto a la vez
+        document.querySelectorAll('.faq-item').forEach(otherItem => {
+            if (otherItem !== item) otherItem.classList.remove('active');
+        });
+
+        item.classList.toggle('active');
+    });
+});
+
 // Carga de imágenes en la galería
 const galleryImages = [
     'assets/ui_preview.png',
-    'assets/Logo_full.png',
+    'assets/Logo_full.png', // Opcional, puedes quitarla si no quieres el logo aquí
     'assets/screenshot2.png'
 ];
 
@@ -33,7 +47,6 @@ galleryImages.forEach(src => {
     img.alt = "Viper Showcase";
     img.setAttribute('data-aos', 'fade-up');
     
-    // Manejo de errores si la imagen no existe
     img.onerror = () => img.style.display = 'none';
     
     galleryContainer.appendChild(img);

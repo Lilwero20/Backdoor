@@ -1,36 +1,40 @@
-// Carga dinámica de imágenes desde la carpeta /assets/
-const images = [
-    'assets/Logo_full.png',
+// Inicializar AOS
+AOS.init({
+    duration: 1000,
+    once: true
+});
+
+// Cambiar estilo de Navbar al hacer Scroll
+window.addEventListener('scroll', () => {
+    const nav = document.getElementById('navbar');
+    if (window.scrollY > 50) {
+        nav.style.background = 'rgba(5, 5, 5, 0.9)';
+        nav.style.backdropFilter = 'blur(10px)';
+        nav.style.padding = '15px 0';
+    } else {
+        nav.style.background = 'transparent';
+        nav.style.backdropFilter = 'none';
+        nav.style.padding = '20px 0';
+    }
+});
+
+// Carga de imágenes en la galería
+const galleryImages = [
     'assets/ui_preview.png',
-    'assets/screenshot1.png' // Ejemplo extra para la galería
+    'assets/Logo_full.png',
+    'assets/screenshot2.png'
 ];
 
-const gallery = document.getElementById('image-gallery');
+const galleryContainer = document.getElementById('gallery');
 
-function loadGallery() {
-    images.forEach(src => {
-        const imgElement = document.createElement('img');
-        imgElement.src = src;
-        imgElement.alt = "Viper Gallery Image";
-        imgElement.setAttribute('data-aos', 'fade-up');
-        
-        // Manejo de error
-        imgElement.onerror = () => imgElement.style.display = 'none';
-        
-        gallery.appendChild(imgElement);
-    });
-}
-
-document.addEventListener('DOMContentLoaded', loadGallery);
-
-// Efecto de scroll para el Navbar
-window.addEventListener('scroll', () => {
-    const nav = document.querySelector('nav');
-    if (window.scrollY > 50) {
-        nav.style.background = "rgba(0, 0, 0, 0.98)";
-        nav.style.boxShadow = "0 10px 30px rgba(0,0,0,0.8)";
-    } else {
-        nav.style.background = "transparent";
-        nav.style.boxShadow = "none";
-    }
+galleryImages.forEach(src => {
+    const img = document.createElement('img');
+    img.src = src;
+    img.alt = "Viper Showcase";
+    img.setAttribute('data-aos', 'fade-up');
+    
+    // Manejo de errores si la imagen no existe
+    img.onerror = () => img.style.display = 'none';
+    
+    galleryContainer.appendChild(img);
 });

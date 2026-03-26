@@ -1,13 +1,7 @@
 {
   "latest": "1.0.4",
   "url": "https://lilwero20.github.io/Viper/",
-  "notes": "Executor: Reworked for better performance.
-
-Notification System: Updated and refined.
-
-Update Checker: Improved reliability.
-
-Viper Executor: Officially released.",
+  "notes": "• Executor: Reworked for better performance.\n• Notification System: Updated and refined.\n• Update Checker: Improved reliability.\n• Viper Executor: Officially released.",
   "releaseDate": "2026-03-25",
   "mandatory": true,
   "minSupported": "1.0.0"

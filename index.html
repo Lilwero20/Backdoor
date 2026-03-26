@@ -3,72 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Viper | The Ultimate Executor</title>
+    <title>Viper | Official Release</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
     <link rel="stylesheet" href="style.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
-    <div class="bg-glow"></div>
+    <div id="particles-js" class="bg-glow"></div>
 
     <nav>
-        <div class="logo">VIPER</div>
+        <div class="logo-container">
+            <img src="assets/Logo_full.png" alt="Viper Logo" class="nav-logo">
+        </div>
         <div class="nav-links">
             <a href="#features">Features</a>
-            <a href="#showcase">Showcase</a>
+            <a href="#showcase">Gallery</a>
             <a href="https://work.ink/21Ww/ycfocm88" class="btn-nav">Download</a>
         </div>
     </nav>
 
     <header class="hero">
         <div class="hero-content" data-aos="fade-up">
+            <div class="status-banner">
+                <span class="status-dot"></span> Viper Status: <span class="purple-text">Injected</span>
+            </div>
             <h1 class="gradient-text">Viper Executor</h1>
-            <p>Experience the next generation of execution. Power, speed, and 92% UNC compatibility in one sleek package.</p>
+            <p>The ultimate execution experience. Viper dominates with 92% UNC compatibility and unmatched performance. Ready for the next level?</p>
             <div class="hero-btns">
                 <a href="https://work.ink/21Ww/ycfocm88" class="btn-main">Get Viper Now</a>
-                <a href="#features" class="btn-secondary">Learn More</a>
+                <a href="#features" class="btn-secondary">Explore API</a>
             </div>
+        </div>
+
+        <div class="main-preview-container" data-aos="zoom-in" data-aos-delay="200">
+            <img src="assets/ui_preview.png" alt="Viper UI Preview" class="main-preview neon-border">
         </div>
     </header>
 
     <section id="features" class="features">
-        <h2 data-aos="fade-down">Why Viper?</h2>
+        <h2 data-aos="fade-down">The Viper Advantage</h2>
         <div class="features-grid">
             <div class="feature-card" data-aos="zoom-in">
-                <i class="fas fa-bolt"></i>
-                <h3>High Performance</h3>
-                <p>Optimized engine for maximum stability and zero crashes during execution.</p>
+                <i class="fas fa-microchip"></i>
+                <h3>Maximum Performance</h3>
+                <p>Zero crashes. Zero lag. Our engine is built for the most complex scripts.</p>
             </div>
             <div class="feature-card" data-aos="zoom-in" data-aos-delay="100">
-                <i class="fas fa-shield-halved"></i>
-                <h3>92% UNC Support</h3>
-                <p>Viper is currently the best executor with top-tier script compatibility.</p>
+                <i class="fas fa-star"></i>
+                <h3>92% UNC Power</h3>
+                <p>Viper provides the highest script compatibility on the market. Better than Xeno.</p>
             </div>
             <div class="feature-card" data-aos="zoom-in" data-aos-delay="200">
-                <i class="fas fa-code"></i>
-                <h3>Custom API</h3>
-                <p>We are currently developing the <b>Viper Custom API</b> for an even deeper experience.</p>
+                <i class="fas fa-gears"></i>
+                <h3>Viper Custom API</h3>
+                <p>We are currently developing a groundbreaking custom API for unparalleled execution.</p>
             </div>
         </div>
     </section>
 
     <section id="showcase" class="showcase">
-        <h2 data-aos="fade-up">Visual Showcase</h2>
-        <div class="gallery" id="image-gallery">
+        <h2 data-aos="fade-up">Gallery</h2>
+        <div class="gallery neon-border" id="image-gallery">
             </div>
     </section>
 
     <footer>
-        <p>&copy; 2026 <span class="purple">Viper</span>. All rights reserved.</p>
+        <img src="assets/Logo_full.png" alt="Viper" class="footer-logo">
+        <p>&copy; 2026 <span class="purple">Viper Team</span>. All rights reserved.</p>
         <div class="footer-links">
             <a href="#"><i class="fab fa-discord"></i></a>
-            <a href="#"><i class="fab fa-youtube"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
         </div>
     </footer>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script src="script.js"></script>
-    <script>AOS.init({ duration: 1000, once: true });</script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+        // Partículas sutiles
+        particlesJS.load('particles-js', 'assets/particles.json', function() {
+            console.log('particles.js loaded - callback');
+        });
+    </script>
 </body>
 </html>

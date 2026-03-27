@@ -1,7 +1,7 @@
 {
-  "latest": "1.0.4",
+  "latest": "1.0.5",
   "url": "https://lilwero20.github.io/Viper/",
-  "notes": "• Executor: Reworked for better performance.\n• Notification System: Updated and refined.\n• Update Checker: Improved reliability.\n• Viper Executor: Officially released.",
+  "notes": "• API: Api Updated.\n• Version: Updated to the latest roblox version.",
   "releaseDate": "2026-03-25",
   "mandatory": true,
   "minSupported": "1.0.0"

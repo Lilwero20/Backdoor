@@ -36,7 +36,7 @@ document.querySelectorAll('.faq-question').forEach(question => {
 // Carga Dinámica de la Galería
 const galleryImages = [
     'assets/ui_preview.png',
-    'assets/Image.png'
+    'assets/screenshot1.png'
 ];
 
 const galleryContainer = document.getElementById('gallery');

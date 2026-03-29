@@ -5,8 +5,8 @@ AOS.init({ duration: 1000, once: true });
 window.addEventListener('scroll', () => {
     const nav = document.getElementById('navbar');
     if (window.scrollY > 50) {
-        nav.style.background = 'rgba(5, 5, 5, 0.98)';
-        nav.style.padding = '12px 0';
+        nav.style.background = 'rgba(5, 5, 5, 0.95)';
+        nav.style.padding = '15px 0';
         nav.style.borderBottom = '1px solid rgba(191, 0, 255, 0.2)';
     } else {
         nav.style.background = 'transparent';
@@ -15,7 +15,7 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Lógica de FAQ
+// Lógica de FAQ (Acordeón)
 document.querySelectorAll('.faq-question').forEach(button => {
     button.addEventListener('click', () => {
         const item = button.parentElement;
@@ -27,24 +27,23 @@ document.querySelectorAll('.faq-question').forEach(button => {
     });
 });
 
-// Carga de imágenes en la galería (Miniaturas)
+// Carga de imágenes en la galería
 const galleryContainer = document.getElementById('gallery');
+// He añadido más repeticiones para que veas el efecto de red de imágenes pequeñas
 const imgs = [
     'assets/ui_preview.png', 
     'assets/screenshot1.png',
     'assets/ui_preview.png',
     'assets/ui_preview.png',
     'assets/ui_preview.png',
-    'assets/ui_preview.png',
-    'assets/ui_preview.png',
     'assets/ui_preview.png'
 ];
 
-if(galleryContainer) {
+if (galleryContainer) {
     imgs.forEach(src => {
         const img = document.createElement('img');
         img.src = src;
-        img.setAttribute('data-aos', 'zoom-in');
+        img.setAttribute('data-aos', 'fade-up');
         img.onerror = () => img.style.display = 'none';
         galleryContainer.appendChild(img);
     });

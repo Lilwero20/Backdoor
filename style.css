@@ -52,48 +52,51 @@ nav { position: fixed; top: 0; width: 100%; padding: 20px 0; z-index: 1000; tran
 .section { padding: 80px 10%; text-align: center; }
 .section-title { font-size: 2.5rem; margin-bottom: 60px; font-weight: 800; }
 
-/* FEATURES - TARJETAS */
+/* FEATURES GRID (TARJETAS) */
 .features-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 24px;
+    gap: 30px;
     max-width: 1100px;
     margin: 0 auto;
 }
 
+/* TARJETA */
 .card {
-    background: #0f0f0f;
-    padding: 32px;
-    border-radius: 18px;
-    border: 1px solid rgba(191, 0, 255, 0.15);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-    transition: 0.35s ease;
+    background: var(--card);
+    padding: 35px 25px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.05);
     text-align: center;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
 }
 
+/* EFECTO HOVER */
 .card:hover {
-    transform: translateY(-6px);
-    border-color: rgba(191, 0, 255, 0.45);
-    box-shadow: 0 16px 40px rgba(191, 0, 255, 0.12);
+    transform: translateY(-8px);
+    border-color: var(--primary);
+    box-shadow: 0 0 25px rgba(191, 0, 255, 0.15);
 }
 
+/* ICONO */
 .card i {
     font-size: 2rem;
+    margin-bottom: 15px;
     color: var(--primary);
-    margin-bottom: 18px;
-    text-shadow: 0 0 18px var(--primary-glow);
 }
 
+/* TITULO */
 .card h3 {
-    font-size: 1.35rem;
-    margin-bottom: 12px;
-    font-weight: 800;
+    font-size: 1.3rem;
+    margin-bottom: 10px;
 }
 
+/* TEXTO */
 .card p {
     color: var(--text-dim);
-    font-size: 0.98rem;
-    line-height: 1.7;
+    font-size: 0.95rem;
 }
 
 /* GALLERY GRID - IMAGENES PEQUEÑAS */

@@ -1,60 +1,42 @@
-// Active Nav Link Switcher
-const sections = document.querySelectorAll("section, header");
-const navLinks = document.querySelectorAll(".nav-item");
+// Inicializar animaciones AOS
+AOS.init({ duration: 1000, once: true });
 
-window.addEventListener("scroll", () => {
-    let current = "";
-    sections.forEach((section) => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        if (pageYOffset >= sectionTop - 100) {
-            current = section.getAttribute("id");
-        }
-    });
-
-    navLinks.forEach((a) => {
-        a.classList.remove("active");
-        if (a.getAttribute("href") === `#${current}`) {
-            a.classList.add("active");
-        }
-    });
-});
-
-// FAQ Accordion Logic
-document.querySelectorAll('.faq-btn').forEach(button => {
-    button.addEventListener('click', () => {
-        const panel = button.nextElementSibling;
-        const isOpen = panel.style.maxHeight;
-
-        document.querySelectorAll('.faq-panel').forEach(p => p.style.maxHeight = null);
-        document.querySelectorAll('.faq-btn span:last-child').forEach(s => s.innerText = '+');
-
-        if (!isOpen) {
-            panel.style.maxHeight = panel.scrollHeight + "px";
-            button.querySelector('span:last-child').innerText = '-';
-        }
-    });
-});
-
-// Scroll Reveal Observer
-const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('reveal-visible');
-        }
-    });
-}, { threshold: 0.1 });
-
-document.querySelectorAll('.scroll-reveal').forEach(el => revealObserver.observe(el));
-
-// Sticky Navbar & Shrink Effect
+// Cambio de estilo del Navbar al hacer scroll
 window.addEventListener('scroll', () => {
-    const nav = document.querySelector('.navbar');
+    const nav = document.getElementById('navbar');
     if (window.scrollY > 50) {
-        nav.style.padding = '12px 0';
-        nav.style.backgroundColor = 'rgba(7, 7, 8, 0.95)';
+        nav.style.background = 'rgba(5, 5, 5, 0.95)';
+        nav.style.padding = '15px 0';
     } else {
+        nav.style.background = 'transparent';
         nav.style.padding = '20px 0';
-        nav.style.backgroundColor = 'transparent';
     }
+});
+
+// Lógica de FAQ (Acordeón)
+document.querySelectorAll('.faq-question').forEach(button => {
+    button.addEventListener('click', () => {
+        const item = button.parentElement;
+        item.classList.toggle('active');
+        
+        // Opcional: Cerrar otros cuando uno se abre
+        document.querySelectorAll('.faq-item').forEach(other => {
+            if (other !== item) other.classList.remove('active');
+        });
+    });
+});
+
+// Simulación de carga de galería (puedes añadir más rutas aquí)
+const galleryContainer = document.getElementById('gallery');
+const imgs = ['assets/ui_preview.png', 'assets/Logo_full.png'];
+
+imgs.forEach(src => {
+    const img = document.createElement('img');
+    img.src = src;
+    img.style.width = "100%";
+    img.style.borderRadius = "12px";
+    img.style.border = "1px solid rgba(255,255,255,0.1)";
+    img.setAttribute('data-aos', 'fade-up');
+    img.onerror = () => img.style.display = 'none'; // Ocultar si no existe
+    galleryContainer.appendChild(img);
 });

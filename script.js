@@ -19,24 +19,22 @@ document.querySelectorAll('.faq-question').forEach(button => {
         const item = button.parentElement;
         item.classList.toggle('active');
         
-        // Opcional: Cerrar otros cuando uno se abre
         document.querySelectorAll('.faq-item').forEach(other => {
             if (other !== item) other.classList.remove('active');
         });
     });
 });
 
-// Simulación de carga de galería (puedes añadir más rutas aquí)
+// Carga de imágenes en la galería
 const galleryContainer = document.getElementById('gallery');
 const imgs = ['assets/ui_preview.png', 'assets/Logo_full.png'];
 
-imgs.forEach(src => {
-    const img = document.createElement('img');
-    img.src = src;
-    img.style.width = "100%";
-    img.style.borderRadius = "12px";
-    img.style.border = "1px solid rgba(255,255,255,0.1)";
-    img.setAttribute('data-aos', 'fade-up');
-    img.onerror = () => img.style.display = 'none'; // Ocultar si no existe
-    galleryContainer.appendChild(img);
-});
+if(galleryContainer) {
+    imgs.forEach(src => {
+        const img = document.createElement('img');
+        img.src = src;
+        img.setAttribute('data-aos', 'fade-up');
+        img.onerror = () => img.style.display = 'none';
+        galleryContainer.appendChild(img);
+    });
+}

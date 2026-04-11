@@ -1,7 +1,7 @@
 {
   "version": "1.0.6",
-  "status": "Down",
-  "reason": "Roblox Anticheat updated.",
+  "status": "Operational",
+  "reason": "Executor is working.",
   "last_check": "2026-04-11",
-  "alert": "Ban risk/Injector Cannot attach to the new roblox version please wait for an update."
+  "alert": "None"
 }

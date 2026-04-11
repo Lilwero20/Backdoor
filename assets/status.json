@@ -1,7 +1,7 @@
 {
   "version": "1.0.6",
-  "status": "Operational",
-  "reason": "Executor is working.",
+  "status": "Updating",
+  "reason": "System maintenance: UI redesign and API update in progress for the latest game version.",
   "last_check": "2026-04-11",
   "alert": "None"
 }

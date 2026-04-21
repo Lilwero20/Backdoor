@@ -12,14 +12,14 @@ local PlayerGui = player:WaitForChild("PlayerGui")
 local windowCount = 0
 
 -- CONFIGURACIÓN DE TEMA: VIPER PURPLE
-local BG_THEME = Color3.fromRGB(10, 8, 18)       -- Fondo ultra oscuro
-local ACCENT_COLOR = Color3.fromRGB(160, 32, 240) -- Morado Viper
-local SECONDARY_BG = Color3.fromRGB(22, 16, 35)   -- Botones y elementos
+local BG_THEME = Color3.fromRGB(10, 8, 18)
+local ACCENT_COLOR = Color3.fromRGB(160, 32, 240) 
+local SECONDARY_BG = Color3.fromRGB(22, 16, 35)
 local TEXT_COLOR = Color3.fromRGB(245, 245, 245)
 
 local IS_TOUCH = UserInputService.TouchEnabled
 local BUTTON_H = IS_TOUCH and 38 or 34
-local SLIDER_H = IS_TOUCH and 50 or 44
+local SLIDER_H = IS_TOUCH and 54 or 48
 local TITLE_H = IS_TOUCH and 42 or 38
 local BODY_TEXT = IS_TOUCH and 14 or 13
 
@@ -33,18 +33,19 @@ sg.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 pcall(function() sg.Parent = CoreGui end)
 if not sg.Parent then sg.Parent = PlayerGui end
 
--- Contenedor de Notificaciones
+-- CONTENEDOR DE NOTIFICACIONES (ABAJO A LA IZQUIERDA)
 local notifHolder = Instance.new("Frame")
 notifHolder.Name = "ViperNotifs"
 notifHolder.Parent = sg
 notifHolder.Size = UDim2.new(0, 250, 1, -40)
-notifHolder.Position = UDim2.new(1, -260, 0, 20)
+notifHolder.Position = UDim2.new(0, 20, 1, -20)
+notifHolder.AnchorPoint = Vector2.new(0, 1)
 notifHolder.BackgroundTransparency = 1
 
 local layout = Instance.new("UIListLayout")
 layout.Parent = notifHolder
 layout.Padding = UDim.new(0, 10)
-layout.VerticalAlignment = Enum.VerticalAlignment.Top
+layout.VerticalAlignment = Enum.VerticalAlignment.Bottom
 layout.SortOrder = Enum.SortOrder.LayoutOrder
 
 -- UTILIDADES
@@ -146,13 +147,13 @@ end
 -- VENTANA PRINCIPAL
 function Viper:CreateWindow(title, sizeX, sizeY)
     windowCount = windowCount + 1
-    sizeX, sizeY = tonumber(sizeX) or 260, tonumber(sizeY) or 320
+    sizeX, sizeY = tonumber(sizeX) or 260, tonumber(sizeY) or 340
 
     local main = Instance.new("Frame")
     main.Name = "Viper_" .. title
     main.Parent = sg
     main.Size = UDim2.fromOffset(sizeX, sizeY)
-    main.Position = UDim2.new(0, 50 + (windowCount-1)*280, 0, 100)
+    main.Position = UDim2.new(0.5, -sizeX/2 + (windowCount-1)*30, 0.5, -sizeY/2)
     main.BackgroundColor3 = BG_THEME
     main.BorderSizePixel = 0
     main.ClipsDescendants = true
@@ -168,7 +169,7 @@ function Viper:CreateWindow(title, sizeX, sizeY)
     local titleLbl = Instance.new("TextLabel")
     titleLbl.Size = UDim2.new(1, 0, 1, 0)
     titleLbl.BackgroundTransparency = 1
-    titleLbl.Text = " " .. title:upper()
+    titleLbl.Text = title:upper()
     titleLbl.Font = Enum.Font.GothamBold
     titleLbl.TextColor3 = ACCENT_COLOR
     titleLbl.TextSize = 16
@@ -216,7 +217,7 @@ function Viper:CreateWindow(title, sizeX, sizeY)
         end)
     end
 
-    -- TOGGLE
+    -- TOGGLE (MEJORADO ESTÉTICAMENTE)
     function win:Toggle(text, default, callback)
         local state = default or false
         local tog = Instance.new("TextButton")
@@ -231,21 +232,31 @@ function Viper:CreateWindow(title, sizeX, sizeY)
         tog.Parent = container
         Instance.new("UICorner", tog).CornerRadius = UDim.new(0, 6)
 
-        local indicator = Instance.new("Frame")
-        indicator.Size = UDim2.new(0, 20, 0, 20)
-        indicator.Position = UDim2.new(1, -30, 0.5, -10)
-        indicator.BackgroundColor3 = state and ACCENT_COLOR or Color3.fromRGB(40, 40, 40)
-        indicator.Parent = tog
-        Instance.new("UICorner", indicator).CornerRadius = UDim.new(1, 0)
+        -- Track del Switch
+        local track = Instance.new("Frame")
+        track.Size = UDim2.new(0, 34, 0, 18)
+        track.Position = UDim2.new(1, -40, 0.5, -9)
+        track.BackgroundColor3 = state and ACCENT_COLOR or Color3.fromRGB(45, 45, 60)
+        track.Parent = tog
+        Instance.new("UICorner", track).CornerRadius = UDim.new(1, 0)
+
+        -- Knob del Switch
+        local knob = Instance.new("Frame")
+        knob.Size = UDim2.new(0, 14, 0, 14)
+        knob.Position = state and UDim2.new(1, -16, 0.5, -7) or UDim2.new(0, 2, 0.5, -7)
+        knob.BackgroundColor3 = Color3.new(1, 1, 1)
+        knob.Parent = track
+        Instance.new("UICorner", knob).CornerRadius = UDim.new(1, 0)
 
         tog.MouseButton1Click:Connect(function()
             state = not state
-            TweenService:Create(indicator, TweenInfo.new(0.2), {BackgroundColor3 = state and ACCENT_COLOR or Color3.fromRGB(40, 40, 40)}):Play()
+            TweenService:Create(track, TweenInfo.new(0.2), {BackgroundColor3 = state and ACCENT_COLOR or Color3.fromRGB(45, 45, 60)}):Play()
+            TweenService:Create(knob, TweenInfo.new(0.2), {Position = state and UDim2.new(1, -16, 0.5, -7) or UDim2.new(0, 2, 0.5, -7)}):Play()
             pcall(callback, state)
         end)
     end
 
-    -- SLIDER
+    -- SLIDER (MEJORADO Y CENTRADO)
     function win:Slider(text, min, max, default, callback)
         local val = default or min
         local holder = Instance.new("Frame")
@@ -258,15 +269,16 @@ function Viper:CreateWindow(title, sizeX, sizeY)
         lbl.BackgroundTransparency = 1
         lbl.Text = text .. ": " .. val
         lbl.Font = Enum.Font.GothamBold
-        lbl.TextColor3 = Color3.new(0.8, 0.8, 0.8)
+        lbl.TextColor3 = Color3.new(0.9, 0.9, 0.9)
         lbl.TextSize = 12
-        lbl.TextXAlignment = Enum.TextXAlignment.Left
+        lbl.TextXAlignment = Enum.TextXAlignment.Center -- TEXTO CENTRADO
         lbl.Parent = holder
 
         local bar = Instance.new("Frame")
-        bar.Size = UDim2.new(1, -10, 0, 6)
-        bar.Position = UDim2.new(0, 5, 0, 32)
-        bar.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+        bar.Size = UDim2.new(1, -20, 0, 6)
+        bar.Position = UDim2.new(0.5, 0, 0, 36)
+        bar.AnchorPoint = Vector2.new(0.5, 0)
+        bar.BackgroundColor3 = Color3.fromRGB(35, 30, 50)
         bar.Parent = holder
         Instance.new("UICorner", bar)
 
@@ -276,16 +288,28 @@ function Viper:CreateWindow(title, sizeX, sizeY)
         fill.Parent = bar
         Instance.new("UICorner", fill)
 
+        local knob = Instance.new("Frame")
+        knob.Size = UDim2.new(0, 14, 0, 14)
+        knob.AnchorPoint = Vector2.new(0.5, 0.5)
+        knob.Position = UDim2.fromScale(math.clamp((val-min)/(max-min), 0, 1), 0.5)
+        knob.BackgroundColor3 = Color3.new(1, 1, 1)
+        knob.Parent = bar
+        Instance.new("UICorner", knob).CornerRadius = UDim.new(1, 0)
+        local ks = Instance.new("UIStroke", knob)
+        ks.Thickness = 2
+        ks.Color = ACCENT_COLOR
+
         local dragging = false
         local function update(input)
             local ratio = math.clamp((input.Position.X - bar.AbsolutePosition.X) / bar.AbsoluteSize.X, 0, 1)
             val = math.floor(min + (max - min) * ratio)
             fill.Size = UDim2.fromScale(ratio, 1)
+            knob.Position = UDim2.fromScale(ratio, 0.5)
             lbl.Text = text .. ": " .. val
             pcall(callback, val)
         end
 
-        bar.InputBegan:Connect(function(i)
+        holder.InputBegan:Connect(function(i)
             if i.UserInputType == Enum.UserInputType.MouseButton1 or i.UserInputType == Enum.UserInputType.Touch then
                 dragging = true
                 update(i)

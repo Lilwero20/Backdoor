@@ -1222,3 +1222,5 @@ function Viper:CreateWindow(windowTitle)
 
 	return Window
 end
+
+return Viper
